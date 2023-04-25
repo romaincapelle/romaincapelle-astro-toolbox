@@ -16,5 +16,8 @@
     "eslint": "^8.18.0",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.8.0"
+  },
+  "dependencies": {
+    "@fontsource/asap": "^4.5.11"
   }
 }

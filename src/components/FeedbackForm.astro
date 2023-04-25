@@ -17,8 +17,8 @@
         <input type="hidden" name="form-name" value="feedback" style="width: 80%"/>
         <!-- <label for="name">Name</label>
         <input id="name" type="text" name="name" /> -->
-        <label for="email">Your Email</label>
-        <input id="email" type="email" name="email" required />
+        <!-- <label for="email">Your Email</label> -->
+        <input placeholder="Your Email" id="email" type="email" name="email" required />
         <!-- <label for="feedback">What is your feedback?</label>
         <textarea id="feedback" wrap="soft" name="feedback" required></textarea> -->
         <button type="submit">Submit</button>
@@ -37,8 +37,8 @@ button {
   font-size: inherit;
   margin: 15px 0;
   padding: 12px 20px;
-  width: 100%;
 }
+
 button {
   background-color: teal;
   border: 1px solid black;
@@ -53,5 +53,13 @@ button {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+input {
+  width: unset;
+}
+
+.feedback-form__input-email {
+  width: unset;
 }
 </style>
