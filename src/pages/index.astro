@@ -4,17 +4,37 @@ import FeedbackForm from '../components/FeedbackForm.astro';
 ---
 
 <Layout title="Romain Capelle - Senior Front-end developer">
-  <main>
-    <div class="header"></div>
-    <div class="intro">
-      <h1>ROMAIN CAPELLE</h1>
-      <h2>Senior Front-end developer</h2>
-      <p>Hi 👋! I am currently working on redoing this personal website.</p>
-      <p>Last Update: 04/25/2023</p>
-    </div>
-  </main>
+  <div class="site">
+    <header>
+     👋
+    </header>
+    <main>
+      <div class="header"></div>
+      <div class="intro">
+        <h1>Romain Capelle is a Senior Shopify Front-end developer</h1>
+        <span><h2>based in Santa Barbara, California</h2></span>
+        <p>☹︎ WEBSITE CURRENTLY UNDER CONSTRUCTION ☺︎</p>
+      </div>
+    </main>
 
-  <FeedbackForm />
+    <footer>
+      <a class="logo-linked-in" href="https://www.linkedin.com/in/romaincapelle/" target="_blank">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="#0077B5"
+          width="28"
+          height="28"
+        >
+          <path
+            d="M20.25 0H3.75C1.6775 0 0 1.6775 0 3.75V20.25C0 22.3225 1.6775 24 3.75 24H20.25C22.3225 24 24 22.3225 24 20.25V3.75C24 1.6775 22.3225 0 20.25 0ZM7.5 18.75H3.75V8.25H7.5V18.75ZM5.625 6.75C4.8725 6.75 4.3125 6.19 4.3125 5.4375C4.3125 4.6925 4.8725 4.125 5.625 4.125C6.3725 4.125 6.9375 4.6925 6.9375 5.4375C6.9375 6.19 6.3725 6.75 5.625 6.75ZM19.5 18.75H15.75V13.875C15.75 12.4425 14.8825 11.8125 14.1 11.8125C13.3175 11.8125 12.9375 12.4425 12.9375 13.875V18.75H9.1875V8.25H12.9375V9.7425H12.975C13.47 8.8425 14.445 7.875 16.125 7.875C19.9275 7.875 19.5 10.3875 19.5 12.375V18.75Z"
+          ></path>
+        </svg>
+      </a>
+    </footer>
+  </div>
+
+  <!-- <FeedbackForm /> -->
   <!-- <a class="jokes-link" href="/api/joke">
     <h3>
       Click here for function-loaded jokes!
@@ -25,6 +45,20 @@ import FeedbackForm from '../components/FeedbackForm.astro';
 <style>
   :root {
     text-align: center;
+  }
+  header {
+    background-color: var(--color-red);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .site {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 1fr 80px;
+    min-height: 100%;
+    background-color: var(--color-blue);
   }
 
   main {
@@ -39,13 +73,28 @@ import FeedbackForm from '../components/FeedbackForm.astro';
 
   footer {
     height: 100px;
-    border-top: 1px solid #eaeaea;
+    /* border-top: 1px solid #eaeaea; */
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--color-yellow);
   }
 
   footer img {
     width: 20px;
   }
+
+  .logo-linked-in {
+    width: 28px;
+    height: 28px;
+    margin: 0 10px;
+  }
+
+  /* //hover */
+  .logo-linked-in:hover {
+    fill: red;
+    cursor: pointer;
+
+  }
+
 </style>
