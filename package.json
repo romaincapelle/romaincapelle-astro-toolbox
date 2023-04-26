@@ -14,11 +14,13 @@
   "devDependencies": {
     "astro": "^1.0.0",
     "eslint": "^8.18.0",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.8.0"
   },
   "dependencies": {
     "@fontsource/asap": "^4.5.11",
-    "@fontsource/eb-garamond": "^4.5.11"
+    "@fontsource/eb-garamond": "^4.5.11",
+    "@fontsource/inconsolata": "^4.5.10",
+    "@fontsource/overpass": "^4.5.11"
   }
 }
