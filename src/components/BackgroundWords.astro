@@ -21,21 +21,22 @@ function shuffleArray(array) {
   }
   return newArray;
 }
-
-// Create shuffled arrays for each row
-const shuffledWords = rowPositions.map(() => shuffleArray([...words]));
 ---
 
 <div class="background-words">
-  {rowPositions.map((rowIndex) => (
-    <div class="word-row" style={`grid-row: ${rowIndex + 1};`}>
-      <div class="word-scroll">
-        {[...shuffledWords[rowIndex], ...shuffledWords[rowIndex], ...shuffledWords[rowIndex]].map((word) => (
-          <span class="word">{word}</span>
-        ))}
+  {rowPositions.map((rowIndex) => {
+    // Create a unique shuffled array for each row
+    const rowWords = shuffleArray([...words]);
+    return (
+      <div class="word-row" style={`grid-row: ${rowIndex + 1};`}>
+        <div class="word-scroll">
+          {[...rowWords, ...rowWords, ...rowWords].map((word) => (
+            <span class="word">{word}</span>
+          ))}
+        </div>
       </div>
-    </div>
-  ))}
+    );
+  })}
 </div>
 
 <style>
