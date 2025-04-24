@@ -31,13 +31,59 @@ function shuffleArray(array) {
       <div class="word-row" style={`grid-row: ${rowIndex + 1};`}>
         <div class="word-scroll">
           {[...rowWords, ...rowWords, ...rowWords].map((word) => (
-            <span class="word">{word}</span>
+            <span class="word" data-word={word}>{word}</span>
           ))}
         </div>
       </div>
     );
   })}
 </div>
+
+<script>
+  document.addEventListener('mousemove', (e) => {
+    const words = document.querySelectorAll('.word');
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    let closestWord = null;
+    let minDistance = Infinity;
+
+    // First pass: find the closest word
+    words.forEach(word => {
+      const rect = word.getBoundingClientRect();
+      const wordX = rect.left + rect.width / 2;
+      const wordY = rect.top + rect.height / 2;
+
+      const distance = Math.sqrt(
+        Math.pow(mouseX - wordX, 2) +
+        Math.pow(mouseY - wordY, 2)
+      );
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestWord = word;
+      }
+    });
+
+    // Second pass: scale words based on distance from closest word
+    words.forEach(word => {
+      const rect = word.getBoundingClientRect();
+      const wordX = rect.left + rect.width / 2;
+      const wordY = rect.top + rect.height / 2;
+
+      const distance = Math.sqrt(
+        Math.pow(mouseX - wordX, 2) +
+        Math.pow(mouseY - wordY, 2)
+      );
+
+      const maxDistance = 300; // Distance at which effect stops
+      const scale = Math.max(0.5, 1.5 - (distance / maxDistance));
+
+      word.style.transform = `scale(${scale})`;
+      word.style.opacity = Math.max(0.1, 0.4 - (distance / maxDistance));
+    });
+  });
+</script>
 
 <style>
   .background-words {
@@ -77,6 +123,8 @@ function shuffleArray(array) {
     opacity: 0.2;
     color: var(--color-text);
     white-space: nowrap;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform-origin: center;
   }
 
   @keyframes scroll {
