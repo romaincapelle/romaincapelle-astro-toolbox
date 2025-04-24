@@ -48,9 +48,17 @@ const { title } = Astro.props as Props;
     --color-black: hsl(0, 0%, 0%);
     --color-white: #EFEDE3F4;
     --color-text: #3e3e3e;
-    --color-blue: hsl(233, 74%, 45%);
+    --color-blue: #0072b1;
+    --color-blue-hover: #005582;
     --color-red: hsl(2, 97%, 53%);
     --color-yellow: hsl(47, 100%, 50%);
+  }
+
+  [data-theme="dark"] {
+    --color-white: #1a1a1a;
+    --color-text: #ffffff;
+    --color-blue: #0072b1;
+    --color-blue-hover: #0095e0;
   }
 
   body::-webkit-scrollbar {
@@ -70,6 +78,7 @@ const { title } = Astro.props as Props;
     font-size: var(--font-size-base);
     color: var(--color-text);
     background-color: var(--color-white);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   body {
@@ -85,4 +94,45 @@ const { title } = Astro.props as Props;
   :global(h2) {
     font-size: var(--font-size-lg);
   }
+
+  :global(a) {
+    color: var(--color-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  :global(a:hover) {
+    color: var(--color-blue-hover);
+  }
 </style>
+
+<script>
+  // Function to toggle dark mode
+  function toggleDarkMode() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+
+  // Initialize theme from localStorage or system preference
+  function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', initialTheme);
+  }
+
+  // Add click handler to body, excluding LinkedIn link
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeTheme();
+
+    document.body.addEventListener('click', (e) => {
+      // Check if the click was on the LinkedIn link or its children
+      if (!e.target.closest('a[href*="linkedin.com"]')) {
+        toggleDarkMode();
+      }
+    });
+  });
+</script>
