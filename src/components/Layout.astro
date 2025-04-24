@@ -48,15 +48,26 @@ const { title } = Astro.props as Props;
     --color-black: hsl(0, 0%, 0%);
     --color-white: #EFEDE3F4;
     --color-text: #3e3e3e;
+    --color-text-rgb: 62, 62, 62;
     --color-blue: #0072b1;
     --color-blue-hover: #005582;
     --color-red: hsl(2, 97%, 53%);
     --color-yellow: hsl(47, 100%, 50%);
   }
 
+  /* Custom cursor styles */
+  * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23000000' d='M0 0h2v16H0z'/%3E%3Cpath fill='%23000000' d='M0 0h16v2H0z'/%3E%3C/svg%3E") 0 0, auto;
+  }
+
+  a, button, input, textarea, [role="button"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%230072b1' d='M0 0h2v16H0z'/%3E%3Cpath fill='%230072b1' d='M0 0h16v2H0z'/%3E%3C/svg%3E") 0 0, pointer;
+  }
+
   [data-theme="dark"] {
     --color-white: #1a1a1a;
     --color-text: #ffffff;
+    --color-text-rgb: 255, 255, 255;
     --color-blue: #0072b1;
     --color-blue-hover: #0095e0;
   }
