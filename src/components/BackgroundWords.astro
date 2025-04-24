@@ -1,0 +1,89 @@
+---
+const words = [
+  "JavaScript", "TypeScript", "React.js", "Vue.js", "HTML5", "CSS3", "SCSS",
+  "Shopify", "Shopify Plus", "Liquid", "Shopify APIs", "Storefront API", "Shopify Functions",
+  "GraphQL", "REST APIs", "Web Development", "Front-End Development",
+  "UI Engineering", "Performance Optimization", "Scalability", "Accessibility", "ADA",
+  "Responsive Design", "Web Standards", "API Integration", "Solution Architecture",
+  "Technical Architecture", "State Management",
+  "Component Libraries", "Internationalization (i18n)", "Code Quality", "Git",
+  "CI/CD", "Browser DevTools", "Build Tools"
+];
+
+const rowPositions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+// Function to shuffle array
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
+// Create shuffled arrays for each row
+const shuffledWords = rowPositions.map(() => shuffleArray([...words]));
+---
+
+<div class="background-words">
+  {rowPositions.map((rowIndex) => (
+    <div class="word-row" style={`grid-row: ${rowIndex + 1};`}>
+      <div class="word-scroll">
+        {[...shuffledWords[rowIndex], ...shuffledWords[rowIndex], ...shuffledWords[rowIndex]].map((word) => (
+          <span class="word">{word}</span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .background-words {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    display: grid;
+    grid-template-rows: repeat(14, 0.25fr);
+    gap: 0.5rem;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .word-row {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin: -0.25rem 0;
+  }
+
+  .word-scroll {
+    display: flex;
+    gap: 2rem;
+    animation: scroll 240s linear infinite;
+    width: max-content;
+    position: relative;
+    left: -50%;
+  }
+
+  .word {
+    font-size: 1.5rem;
+    opacity: 0.2;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>
