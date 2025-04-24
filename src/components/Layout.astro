@@ -72,6 +72,18 @@ const { title } = Astro.props as Props;
     --color-blue-hover: #0095e0;
   }
 
+  [data-theme="dark"] * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' d='M0 0h2v16H0z'/%3E%3Cpath fill='%23ffffff' d='M0 0h16v2H0z'/%3E%3C/svg%3E") 0 0, auto;
+  }
+
+  [data-theme="dark"] a,
+  [data-theme="dark"] button,
+  [data-theme="dark"] input,
+  [data-theme="dark"] textarea,
+  [data-theme="dark"] [role="button"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%230095e0' d='M0 0h2v16H0z'/%3E%3Cpath fill='%230095e0' d='M0 0h16v2H0z'/%3E%3C/svg%3E") 0 0, pointer;
+  }
+
   body::-webkit-scrollbar {
     width: 0.6em;
   }
