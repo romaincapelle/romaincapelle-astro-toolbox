@@ -18,9 +18,6 @@
     "prettier-plugin-astro": "^0.8.0"
   },
   "dependencies": {
-    "@fontsource/asap": "^4.5.11",
-    "@fontsource/eb-garamond": "^4.5.11",
-    "@fontsource/inconsolata": "^4.5.10",
     "@fontsource/overpass": "^4.5.11"
   }
 }
