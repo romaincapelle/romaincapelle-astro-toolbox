@@ -3,12 +3,11 @@ import Layout from '../components/Layout.astro';
 // import FeedbackForm from '../components/FeedbackForm.astro';
 ---
 
-<Layout title="Romain Capelle - Senior Front-end developer">
+<Layout title="Romain Capelle">
     <main>
       <div class="intro">
-        <h1>Romain Capelle is a Senior Shopify Front-end developer.</h1>
-        <span><h2>Currently based in California</h2></span>
-        <p>☹︎ PORTFOLIO COMING SOON ☺︎</p>
+        <h1>Romain Capelle</h1>
+        <p class="connect-text">Everything you need to know is here:</p>
         <a class="logo-linked-in" href="https://www.linkedin.com/in/romaincapelle/" target="_blank">
           <svg
             class="logo-linked-in-svg"
@@ -53,6 +52,7 @@ import Layout from '../components/Layout.astro';
     margin: 0 auto;
     align-items: center;
     min-height: 90%;
+    text-align: center;
   }
 
   footer {
@@ -88,6 +88,25 @@ import Layout from '../components/Layout.astro';
   .logo-linked-in-svg {
     fill: var(--color-text);
     padding-top: 0px;
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .intro h1, .intro h2 {
+    margin: 0;
+    text-align: center;
+  }
+
+  .connect-text {
+    font-size: var(--font-size-lg);
+    margin: 1rem 0;
+    color: var(--color-text);
   }
 
 </style>

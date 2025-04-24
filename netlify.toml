@@ -3,6 +3,7 @@
   command = "astro build"
   functions = "netlify/functions"
   publish = "dist"
+  targetPort = 3000
 
 [functions]
   node_bundler = "esbuild"
