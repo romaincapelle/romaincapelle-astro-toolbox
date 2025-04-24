@@ -1,102 +1,160 @@
 ---
-import { words } from '../data/words';
+const words = [
+  "JavaScript", "TypeScript", "React.js", "Vue.js", "HTML5", "CSS3", "SCSS",
+  "Shopify", "Shopify Plus", "Liquid", "Shopify APIs", "Storefront API", "Shopify Functions",
+  "GraphQL", "REST APIs", "Web Development", "Front-End Development",
+  "UI Engineering", "Performance Optimization", "Scalability", "Accessibility", "ADA",
+  "Responsive Design", "Web Standards", "API Integration", "Solution Architecture",
+  "Technical Architecture", "State Management",
+  "Component Libraries", "Internationalization (i18n)", "Code Quality", "Git",
+  "CI/CD", "Browser DevTools", "Build Tools"
+];
 
-const isMobile = typeof window !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const rowPositions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
-// Initialize mouse position at the center of the screen
-const initialMouseX = typeof window !== 'undefined' ? window.innerWidth / 2 : 0;
-const initialMouseY = typeof window !== 'undefined' ? window.innerHeight / 2 : 0;
+// Function to shuffle array
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
 ---
 
 <div class="background-words">
-  {words.map((word, index) => (
-    <span
-      class="word"
-      style={`
-        --x: ${Math.random() * 100}%;
-        --y: ${Math.random() * 100}%;
-        --delay: ${index * 0.1}s;
-        --opacity: ${isMobile ? 0.4 : 0.3};
-      `}
-    >
-      {word}
-    </span>
-  ))}
+  {rowPositions.map((rowIndex) => {
+    // Create a unique shuffled array for each row
+    const rowWords = shuffleArray([...words]);
+    return (
+      <div class="word-row" style={`grid-row: ${rowIndex + 1};`}>
+        <div class="word-scroll">
+          {[...rowWords, ...rowWords, ...rowWords].map((word) => (
+            <span class="word" data-word={word}>{word}</span>
+          ))}
+        </div>
+      </div>
+    );
+  })}
 </div>
 
-<style>
-  .background-words {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
-  }
-
-  .word {
-    position: absolute;
-    font-size: 1.5rem;
-    color: var(--color-text);
-    opacity: var(--opacity);
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%));
-    animation: float 3s ease-in-out infinite;
-    animation-delay: var(--delay);
-  }
-
-  @media (max-width: 768px) {
-    .word {
-      font-size: 1.2rem;
-      opacity: 0.4;
-    }
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%));
-    }
-    50% {
-      transform: translate(calc(var(--x) - 50%), calc(var(--y) - 60%));
-    }
-  }
-</style>
-
 <script>
-  if (!isMobile) {
-    const words = document.querySelectorAll('.word');
-    let mouseX = initialMouseX;
-    let mouseY = initialMouseY;
+  // Check if device is mobile
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    // Function to update word positions
-    const updateWordPositions = () => {
+  if (!isMobile) {
+    // Function to handle mouse movement animation
+    const handleMouseMove = (mouseX, mouseY) => {
+      const words = document.querySelectorAll('.word');
+
+      let closestWord = null;
+      let minDistance = Infinity;
+
+      // First pass: find the closest word
       words.forEach(word => {
         const rect = word.getBoundingClientRect();
         const wordX = rect.left + rect.width / 2;
         const wordY = rect.top + rect.height / 2;
 
-        const dx = mouseX - wordX;
-        const dy = mouseY - wordY;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        const distance = Math.sqrt(
+          Math.pow(mouseX - wordX, 2) +
+          Math.pow(mouseY - wordY, 2)
+        );
 
-        const maxDistance = 300;
-        const scale = Math.max(0, 1 - distance / maxDistance);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestWord = word;
+        }
+      });
 
-        word.style.transform = `translate(calc(var(--x) - 50%), calc(var(--y) - 50%)) scale(${1 + scale * 0.2})`;
-        word.style.opacity = (0.3 + scale * 0.4).toString();
+      // Second pass: scale words based on distance from closest word
+      words.forEach(word => {
+        const rect = word.getBoundingClientRect();
+        const wordX = rect.left + rect.width / 2;
+        const wordY = rect.top + rect.height / 2;
+
+        const distance = Math.sqrt(
+          Math.pow(mouseX - wordX, 2) +
+          Math.pow(mouseY - wordY, 2)
+        );
+
+        const maxDistance = 300; // Distance at which effect stops
+        const scale = Math.max(0.5, 1.5 - (distance / maxDistance));
+
+        word.style.transform = `scale(${scale})`;
+        word.style.opacity = Math.max(0.1, 0.4 - (distance / maxDistance));
       });
     };
 
-    // Update positions immediately on load
-    updateWordPositions();
-
-    // Update positions on mouse move
+    // Add mousemove event listener
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      updateWordPositions();
+      handleMouseMove(e.clientX, e.clientY);
+    });
+
+    // Trigger initial animation at the center of the viewport
+    window.addEventListener('load', () => {
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      handleMouseMove(centerX, centerY);
     });
   }
 </script>
+
+<style>
+  .background-words {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    display: grid;
+    grid-template-rows: repeat(14, 0.25fr);
+    gap: 0.5rem;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .word-row {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin: -0.25rem 0;
+  }
+
+  .word-scroll {
+    display: flex;
+    gap: 2rem;
+    animation: scroll 240s linear infinite;
+    width: max-content;
+    position: relative;
+    left: -50%;
+  }
+
+  .word {
+    font-size: 1.5rem;
+    opacity: 0.3;
+    color: var(--color-text);
+    white-space: nowrap;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform-origin: center;
+  }
+
+  @media (max-width: 768px) {
+    .word {
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>
